@@ -27,7 +27,8 @@ jobs:
             echo "The formula already points at the latest release."
             exit 0
           fi
-          version=$(grep -m1 '  version "' Formula/quietmouse.rb | cut -d '"' -f2)
+          tag=$(gh release view --repo benjweaver/quietmouse --json tagName -q .tagName)
+          version=${tag#v}
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -am "quietmouse $version"

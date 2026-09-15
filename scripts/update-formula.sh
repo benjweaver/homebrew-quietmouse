@@ -6,7 +6,6 @@ set -eu
 
 repo=benjweaver/quietmouse
 tag=${1:-$(gh release view --repo "$repo" --json tagName -q .tagName)}
-version=${tag#v}
 sums=$(gh release download "$tag" --repo "$repo" --pattern SHA256SUMS --output -)
 
 checksum() {
@@ -27,7 +26,6 @@ cat > Formula/quietmouse.rb <<EOF
 class Quietmouse < Formula
   desc "Offline, telemetry-free settings, buttons and gestures for Logitech mice"
   homepage "https://github.com/$repo"
-  version "$version"
   license "MIT"
 
   livecheck do

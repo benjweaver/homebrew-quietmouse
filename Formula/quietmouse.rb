@@ -2,7 +2,6 @@
 class Quietmouse < Formula
   desc "Offline, telemetry-free settings, buttons and gestures for Logitech mice"
   homepage "https://github.com/benjweaver/quietmouse"
-  version "0.1.2"
   license "MIT"
 
   livecheck do
