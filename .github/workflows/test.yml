@@ -19,7 +19,13 @@ jobs:
     steps:
       - name: Set up Homebrew with this tap
         uses: Homebrew/actions/setup-homebrew@main
-      - run: brew style benjweaver/quietmouse
+      # brew style on the whole tap would hold the POSIX sh update script to
+      # Homebrew's Bash conventions, so it checks the formula and shellcheck
+      # checks the script.
+      - run: brew style benjweaver/quietmouse/quietmouse
+      - name: Lint the update script
+        if: runner.os == 'Linux'
+        run: shellcheck --shell=sh "$(brew --repository benjweaver/quietmouse)/scripts/update-formula.sh"
       - run: brew audit --strict benjweaver/quietmouse/quietmouse
       - run: brew install benjweaver/quietmouse/quietmouse
       - run: brew test benjweaver/quietmouse/quietmouse
