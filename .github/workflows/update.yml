@@ -1,0 +1,36 @@
+name: Update formula
+
+# Points the formula at the latest quietmouse release, then tests it.
+on:
+  schedule:
+    - cron: "23 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Regenerate the formula
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: sh scripts/update-formula.sh
+      - name: Commit and test if it changed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet; then
+            echo "The formula already points at the latest release."
+            exit 0
+          fi
+          version=$(grep -m1 '  version "' Formula/quietmouse.rb | cut -d '"' -f2)
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "quietmouse $version"
+          git push
+          # Pushes made with this token don't trigger workflows, so start the tests explicitly.
+          gh workflow run test.yml --ref "$GITHUB_REF_NAME"

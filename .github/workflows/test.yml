@@ -1,0 +1,25 @@
+name: Test
+
+# Checks the formula's style, then installs and tests it on macOS and Linux.
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Set up Homebrew with this tap
+        uses: Homebrew/actions/setup-homebrew@main
+      - run: brew style benjweaver/quietmouse
+      - run: brew audit --strict benjweaver/quietmouse/quietmouse
+      - run: brew install benjweaver/quietmouse/quietmouse
+      - run: brew test benjweaver/quietmouse/quietmouse
