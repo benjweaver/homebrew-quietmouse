@@ -31,6 +31,8 @@ class Quietmouse < Formula
   def install
     bin.install "quietmouse", "quietmoused"
     pkgshare.install Dir["**/70-quietmouse.rules", "**/modules-load.conf"] if OS.linux?
+    # Releases before 0.1.9 don't carry the notices.
+    doc.install "THIRD-PARTY-NOTICES.md" if File.exist?("THIRD-PARTY-NOTICES.md")
   end
 
   def caveats
