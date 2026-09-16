@@ -66,11 +66,13 @@ class Quietmouse < Formula
     if OS.mac?
       message + <<~TEXT
 
-        On macOS, allow quietmoused under System Settings > Privacy & Security,
-        in Input Monitoring and in Accessibility (called Device Control and Data
-        Access on newer macOS). macOS ties those permissions to the exact binary,
-        so after each upgrade allow it again, then run "quietmouse stop" and
-        "quietmouse start".
+        On macOS, quietmouse asks for Input Monitoring and Accessibility (called
+        Device Control and Data Access on newer macOS) when the agent starts, so
+        macOS prompts and lists it ready to switch on.
+
+        After upgrading, run "quietmouse autostart on" to point at the new
+        version, then switch quietmoused on in both lists when macOS asks.
+        Permissions are tied to the exact binary, so each version asks again.
       TEXT
     else
       message + <<~TEXT
