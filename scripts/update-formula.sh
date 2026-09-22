@@ -53,7 +53,16 @@ class Quietmouse < Formula
   end
 
   def install
-    bin.install "quietmouse", "quietmoused"
+    bin.install "quietmouse"
+    # On macOS quietmoused lives inside a minimal .app bundle, so Privacy &
+    # Security has a real icon for it under Accessibility and Input Monitoring
+    # instead of a generic one; a bare binary has no bundle for those lists to
+    # read an icon from. Linux has no such list, so it stays a bare binary there.
+    if OS.mac?
+      bin.install "quietmoused.app"
+    else
+      bin.install "quietmoused"
+    end
     pkgshare.install Dir["**/70-quietmouse.rules", "**/modules-load.conf"] if OS.linux?
     # Releases before 0.1.9 don't carry the notices.
     doc.install "THIRD-PARTY-NOTICES.md" if File.exist?("THIRD-PARTY-NOTICES.md")
