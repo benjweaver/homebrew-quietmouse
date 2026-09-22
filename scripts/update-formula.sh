@@ -54,12 +54,17 @@ class Quietmouse < Formula
 
   def install
     bin.install "quietmouse"
-    # On macOS quietmoused lives inside a minimal .app bundle, so Privacy &
-    # Security has a real icon for it under Accessibility and Input Monitoring
-    # instead of a generic one; a bare binary has no bundle for those lists to
-    # read an icon from. Linux has no such list, so it stays a bare binary there.
+    # On macOS quietmoused's real binary lives inside a minimal .app bundle, so
+    # Privacy & Security has a real icon for it under Accessibility and Input
+    # Monitoring instead of a generic one; a bare binary has no bundle for those
+    # lists to read an icon from. quietmoused itself has to go in as a symlink
+    # into the bundle, not the bundle directly: brew link only symlinks
+    # individual files out of a keg's bin into the shared bin it puts on PATH,
+    # silently skipping whole directories, so the bundle would never reach it.
+    # Linux has no such list, so it stays a bare binary there.
     if OS.mac?
       bin.install "quietmoused.app"
+      bin.install_symlink "quietmoused.app/Contents/MacOS/quietmoused" => "quietmoused"
     else
       bin.install "quietmoused"
     end
