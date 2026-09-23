@@ -87,7 +87,8 @@ class Quietmouse < Formula
         macOS prompts and lists it ready to switch on.
 
         After upgrading, run "quietmouse autostart on" to point at the new
-        version, then switch quietmoused on in both lists when macOS asks.
+        version, then switch quietmoused on in both lists when macOS asks. On
+        macOS 27 it's listed once, under Device Control and Data Access.
         Permissions are tied to the exact binary, so each version asks again.
       TEXT
     else

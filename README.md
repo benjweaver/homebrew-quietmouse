@@ -11,8 +11,9 @@ quietmouse autostart on
 
 On macOS, allow `quietmoused` under System Settings → Privacy & Security, in Input
 Monitoring and in Accessibility (called Device Control and Data Access on newer macOS).
+On macOS 27 it's listed once, under Device Control and Data Access, and that covers both.
 macOS ties those permissions to the exact binary, so after `brew upgrade quietmouse`,
-allow it again and then run `quietmouse stop` and `quietmouse start`.
+run `quietmouse autostart on` and allow it again when macOS asks.
 
 On Linux, the formula's caveats show the one-time command to install the udev rule. The
 distribution packages on the quietmouse Releases page install it for you.
