@@ -26,7 +26,7 @@ cat > Formula/quietmouse.rb <<EOF
 class Quietmouse < Formula
   desc "Offline, telemetry-free settings, buttons and gestures for Logitech mice"
   homepage "https://github.com/$repo"
-  license "MIT"
+  license "GPL-3.0-or-later"
 
   livecheck do
     url :homepage
