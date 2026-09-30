@@ -20,4 +20,5 @@ distribution packages on the quietmouse Releases page install it for you.
 
 The formula installs the prebuilt release binaries: universal on macOS, x86_64 on Linux.
 `scripts/update-formula.sh` regenerates `Formula/quietmouse.rb` from each release's
-published checksums. A workflow runs it every six hours and then tests the formula.
+published checksums. quietmouse's release workflow runs it for each new release and
+pushes the result here, which starts the tests.
